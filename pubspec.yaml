@@ -44,7 +44,11 @@ dependencies:
   http: ^1.1.0
   flutter_svg: ^2.0.10+1
   flutter_bloc: ^9.1.1
+  cached_network_image: 3.1.0
 
+dependency_overrides:
+  cached_network_image_web: 1.0.2
+  cached_network_image_platform_interface: 1.0.0
 
 dev_dependencies:
   flutter_test:

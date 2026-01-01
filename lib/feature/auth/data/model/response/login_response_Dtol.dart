@@ -1,4 +1,4 @@
-import 'package:shopping_app/feature/auth/domain/entites/login_entity.dart';
+import 'package:shopping_app/feature/auth/domain/entites/auth_entity.dart';
 
 class LoginResponseDto {
   String? accessToken;
@@ -10,6 +10,6 @@ class LoginResponseDto {
     accessToken = json['access_token'];
     refreshToken = json['refresh_token'];
   }
-  LoginEntites toEntity() => LoginEntites(
-      accessToken: accessToken ?? '', refreshToken: refreshToken ?? '');
+  AuthEntity toEntity() =>
+      AuthEntity(accessToken: accessToken, refreshToken: refreshToken);
 }

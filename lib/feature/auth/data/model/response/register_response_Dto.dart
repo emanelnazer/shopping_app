@@ -1,4 +1,4 @@
-import 'package:shopping_app/feature/auth/domain/entites/register_entity.dart';
+import 'package:shopping_app/feature/auth/domain/entites/auth_entity.dart';
 
 class RegisterResponseDto {
   int? id;
@@ -30,11 +30,9 @@ class RegisterResponseDto {
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }
-  RegisterEntities toEntity() => RegisterEntities(
+  AuthEntity toEntity() => AuthEntity(
+        name: name ?? "",
+        email: email ?? "",
         id: id ?? 0,
-        name: name ?? '',
-        email: email ?? '',
-        password: password ?? '',
-        role: role ?? '',
       );
 }

@@ -4,10 +4,7 @@ import 'package:shopping_app/feature/auth/data/model/request/login_request_Dto.d
 import 'package:shopping_app/feature/auth/data/model/request/register_request_Dto.dart';
 import 'package:shopping_app/feature/auth/data/model/response/login_response_Dtol.dart';
 import 'package:shopping_app/feature/auth/data/model/response/register_response_Dto.dart';
-import 'package:shopping_app/feature/auth/domain/entites/loginRequset_entity.dart';
-import 'package:shopping_app/feature/auth/domain/entites/login_entity.dart';
-import 'package:shopping_app/feature/auth/domain/entites/registerRequset_entity.dart';
-import 'package:shopping_app/feature/auth/domain/entites/register_entity.dart';
+import 'package:shopping_app/feature/auth/domain/entites/auth_entity.dart';
 import 'package:shopping_app/feature/auth/domain/repo/data_source/auth_data_source.dart';
 
 class AuthDataSourceImpl extends AuthDataSource {
@@ -15,31 +12,35 @@ class AuthDataSourceImpl extends AuthDataSource {
   final AuthApi _authApi;
 
   @override
-  Future<ResultAPI<RegisterEntities>> RegisterAuth(
-      RegisterRequestEntities requstt) async {
+  Future<ResultAPI<AuthEntity>> register(
+      {required String name,
+      required String email,
+      required String password,
+      String? avatar}) async {
     final regresult = await _authApi.RegisterAuth(
       RegisterRequestDto(
-        name: requstt.name,
-        email: requstt.email,
-        password: requstt.password,
-      ),
+          name: name, email: email, password: password, avatar: avatar),
     );
     switch (regresult) {
       case SuccessAPI<RegisterResponseDto>():
-        return SuccessAPI<RegisterEntities>(data: regresult.data!.toEntity());
+        return SuccessAPI<AuthEntity>(data: regresult.data!.toEntity());
       case ErrorAPI<RegisterResponseDto>():
         return ErrorAPI(messageError: regresult.toString());
     }
   }
 
   @override
-  Future<ResultAPI<LoginEntites>> loginAuth(LoginRequestEntities requst) async {
-    final loginresult = await _authApi.loginAuth(requst as LoginRequestDto);
+  Future<ResultAPI<AuthEntity>> login(
+      {required String email, required String password}) async {
+    final loginresult = await _authApi
+        .loginAuth(LoginRequestDto(email: email, password: password));
     switch (loginresult) {
       case SuccessAPI<LoginResponseDto>():
-        return SuccessAPI<LoginEntites>(data: loginresult.data!.toEntity());
+        return SuccessAPI<AuthEntity>(data: loginresult.data!.toEntity());
       case ErrorAPI<LoginResponseDto>():
-        return ErrorAPI(messageError: loginresult.toString());
+        return ErrorAPI<AuthEntity>(messageError: loginresult.toString());
     }
   }
 }
+
+AuthDataSource injectAuthDataSourceImp = AuthDataSourceImpl(injectAuthApi());

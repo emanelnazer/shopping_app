@@ -1,8 +1,5 @@
 import 'package:shopping_app/core/network/result_api.dart';
-import 'package:shopping_app/feature/auth/domain/entites/loginRequset_entity.dart';
-import 'package:shopping_app/feature/auth/domain/entites/login_entity.dart';
-import 'package:shopping_app/feature/auth/domain/entites/registerRequset_entity.dart';
-import 'package:shopping_app/feature/auth/domain/entites/register_entity.dart';
+import 'package:shopping_app/feature/auth/domain/entites/auth_entity.dart';
 import 'package:shopping_app/feature/auth/domain/repo/data_source/auth_data_source.dart';
 import 'package:shopping_app/feature/auth/domain/repo/repesitory/auth_repo.dart';
 
@@ -11,21 +8,15 @@ class AuthRepoimpl implements AuthRepo {
   final AuthDataSource _authDataSource;
 
   @override
-  Future<ResultAPI<RegisterEntities>> RegisterAuth(
-          RegisterRequestEntities requstt) =>
-      _authDataSource.RegisterAuth(requstt);
+  Future<ResultAPI<AuthEntity>> register(
+          {required String name,
+          required String email,
+          required String password,
+          String? avatar}) =>
+      _authDataSource.register(name: name, email: email, password: password);
 
   @override
-  Future<ResultAPI<LoginEntites>> loginAuth(LoginRequestEntities requst) =>
-      _authDataSource.loginAuth(requst);
-
-  /*
-  @override
-  Future<ResultAPI<RegisterResponseDto>> RegisterAuth(
-          RegisterRequestDto requstt) =>
-      _authDataSource.RegisterAuth(requstt);
-
-  @override
-  Future<ResultAPI<LoginResponseDto>> loginAuth(LoginRequestDto requst) =>
-      _authDataSource.loginAuth(requst);*/
+  Future<ResultAPI<AuthEntity>> login(
+          {required String email, required String password}) =>
+      _authDataSource.login(email: email, password: password);
 }

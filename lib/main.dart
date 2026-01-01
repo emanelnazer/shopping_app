@@ -2,6 +2,7 @@ import 'package:shopping_app/core/utils/app_theme.dart';
 import 'package:shopping_app/feature/app_section/app_section.dart';
 import 'package:shopping_app/feature/auth/presenation/view/login_screen.dart';
 import 'package:shopping_app/feature/auth/presenation/view/register_screen.dart';
+import 'package:shopping_app/feature/home/presentation/view/home_screen.dart';
 import 'package:shopping_app/feature/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +17,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "User App",
-      initialRoute: RegisterScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: {
         OnboardingScreen.routeName: (context) => const OnboardingScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AppSection.routeName: (context) => const AppSection(),
+        HomeScreen.routeName: (context) => HomeScreen(),
       },
       theme: Apptheme.light,
       darkTheme: Apptheme.dark,

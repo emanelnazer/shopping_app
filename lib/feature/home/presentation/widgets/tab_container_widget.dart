@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/feature/home/domain/entities/category_entity.dart';
 import 'package:shopping_app/feature/home/domain/entities/product_entity.dart';

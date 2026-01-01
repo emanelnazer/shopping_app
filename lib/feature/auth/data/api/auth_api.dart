@@ -41,3 +41,5 @@ class AuthApi {
     }
   }
 }
+
+AuthApi injectAuthApi() => AuthApi();

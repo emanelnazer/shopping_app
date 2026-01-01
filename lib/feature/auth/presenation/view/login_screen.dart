@@ -5,11 +5,8 @@ import 'package:shopping_app/core/dialogs/app_dialogs.dart';
 import 'package:shopping_app/core/dialogs/app_toasts.dart';
 import 'package:shopping_app/core/utils/validator_functions.dart';
 import 'package:shopping_app/feature/app_section/app_section.dart';
-import 'package:shopping_app/feature/auth/data/api/auth_api.dart';
-import 'package:shopping_app/feature/auth/data/repo/data_source/auth_data_source_impl.dart';
-import 'package:shopping_app/feature/auth/data/repo/repo/auth_repo_impl.dart';
-import 'package:shopping_app/feature/auth/domain/entites/loginRequset_entity.dart';
 import 'package:shopping_app/feature/auth/domain/usercase/login_use_case.dart';
+import 'package:shopping_app/feature/auth/domain/usercase/register_use_case.dart';
 import 'package:shopping_app/feature/auth/presenation/view/register_screen.dart';
 import 'package:shopping_app/feature/auth/presenation/view_model/auth_cubit.dart';
 import 'package:shopping_app/feature/auth/presenation/view_model/auth_state.dart';
@@ -34,9 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    final authRepo = AuthRepoimpl(AuthDataSourceImpl(AuthApi()));
-    final loginUseCase = LoginUseCase(authRepo);
-    cubit = AuthCubit(loginUseCase: loginUseCase);
+    //final authRepo = AuthRepoimpl(AuthDataSourceImpl(AuthApi()));
+    //final loginUseCase = LoginUseCase(authRepo);
+    //cubit = AuthCubit(loginUseCase: loginUseCase);
+    cubit = AuthCubit(injectableloginUseCase(), injectableregisterUseCase());
   }
 
   @override
@@ -118,10 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50,
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await cubit.login(LoginRequestEntities(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      ));
+                      await cubit.login(
+                          email: emailController.text,
+                          password: passwordController.text);
                     }
                   },
                   color: const Color(0xff212121),

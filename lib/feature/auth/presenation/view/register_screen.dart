@@ -5,10 +5,7 @@ import 'package:shopping_app/core/dialogs/app_dialogs.dart';
 import 'package:shopping_app/core/dialogs/app_toasts.dart';
 import 'package:shopping_app/core/utils/validator_functions.dart';
 import 'package:shopping_app/feature/app_section/app_section.dart';
-import 'package:shopping_app/feature/auth/data/api/auth_api.dart';
-import 'package:shopping_app/feature/auth/data/repo/data_source/auth_data_source_impl.dart';
-import 'package:shopping_app/feature/auth/data/repo/repo/auth_repo_impl.dart';
-import 'package:shopping_app/feature/auth/domain/entites/registerRequset_entity.dart';
+import 'package:shopping_app/feature/auth/domain/usercase/login_use_case.dart';
 import 'package:shopping_app/feature/auth/domain/usercase/register_use_case.dart';
 import 'package:shopping_app/feature/auth/presenation/view/login_screen.dart';
 import 'package:shopping_app/feature/auth/presenation/view_model/auth_cubit.dart';
@@ -38,10 +35,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
-
-    final authRepo = AuthRepoimpl(AuthDataSourceImpl(AuthApi()));
-    final registerUseCase = RegisterUseCase(authRepo);
-    cubit = AuthCubit(registerUseCase: registerUseCase); // فقط registerUseCase
+    cubit = AuthCubit(
+      injectableloginUseCase(),
+      injectableregisterUseCase(),
+    );
+ 
   }
 
   @override
@@ -158,11 +156,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (formKey.currentState!.validate()) {
                       try {
                         print("Before register call");
-                        await cubit.register(RegisterRequestEntities(
-                          name: nameController.text,
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ));
+                        await cubit.register(
+                            name: nameController.text,
+                            email: emailController.text,
+                            password: passwordController.text);
                         print("After register call");
                         Navigator.pushNamed(context, LoginScreen.routeName);
                       } catch (e, st) {

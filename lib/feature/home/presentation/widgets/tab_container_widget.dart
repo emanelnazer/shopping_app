@@ -33,7 +33,7 @@ class _TabContainerWidgetState extends State<TabContainerWidget> {
             onTap: (int index) {
               final product = widget.products[index];
               print(product.toString());
-            
+
             },
             tabs: widget.categories
                 .map(
